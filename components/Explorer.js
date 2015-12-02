@@ -1,7 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
 'use strict';
 
 import React, {
@@ -14,6 +10,8 @@ import React, {
   TouchableHighlight,
   ActivityIndicatorIOS,
 } from 'react-native';
+
+import EventDetail from './EventDetail';
 
 const API_URL = 'http://taichung-frontend.kktix.cc/events.json';
 
@@ -130,7 +128,10 @@ export default class Explorer extends Component {
 
   renderEvent(event) {
     return (
-      <TouchableHighlight underlayColor="#FFFFFF">
+      <TouchableHighlight
+        onPress={() => this.showEventDetail(event)}
+        underlayColor="#FFFFFF"
+      >
         <View style={styles.container}>
           <Image
             source={{ uri: event.image_url }}
@@ -142,5 +143,13 @@ export default class Explorer extends Component {
         </View>
       </TouchableHighlight>
     );
+  }
+
+  showEventDetail(event) {
+    this.props.navigator.push({
+      title: event.title,
+      component: EventDetail,
+      passProps: { url: event.url }
+    });
   }
 }
